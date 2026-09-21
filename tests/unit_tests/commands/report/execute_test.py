@@ -135,10 +135,11 @@ def test_exhausting_retry_sends_only_final_notice(mocker, schedule_type):
 @pytest.mark.parametrize("schedule_type", list(ReportScheduleType))
 @pytest.mark.parametrize("send_failed_reports", [False, True])
 def test_last_retry_preserves_opted_in_recipient_notice(
-    mocker,
-    schedule_type,
-    send_failed_reports,
-):
+    mocker: MockerFixture,
+    schedule_type: ReportScheduleType,
+    send_failed_reports: bool,
+) -> None:
+    """The last retry sends a notice unless a final failure notice replaces it."""
     state = _make_state_instance(
         mocker,
         ReportNotTriggeredErrorState,
